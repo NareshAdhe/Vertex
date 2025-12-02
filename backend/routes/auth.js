@@ -1,12 +1,15 @@
 import express from 'express';
-import {login,logout,register} from '../controllers/auth.js';
+import {login,logout,register, verifyOtp} from '../controllers/auth.js';
+import { verifySessionToken } from '../middlewares/verifyToken.js';
 
 const router = express.Router();
 
-router.get('/login', login);
+router.post('/login', login);
 
-router.get('/register', register);
+router.post('/register', register);
 
-router.get('/logout', logout);
+router.post('/logout', logout);
+
+router.post('/verify',verifySessionToken,verifyOtp);
 
 export default router;
