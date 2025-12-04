@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Mail, KeyRound } from 'lucide-react'
+import { Mail, KeyRound, ArrowLeft, Sparkles, CheckCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
@@ -48,26 +48,39 @@ const ForgotPassword = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="min-h-screen flex items-center justify-center px-4 py-12 relative">
+        <Link 
+          to="/login" 
+          className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors font-medium"
+        >
+          <ArrowLeft size={20} />
+          <span>Back to Login</span>
+        </Link>
+
         <div className="w-full max-w-md animate-slide-up">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-600 text-white mb-4 shadow-md">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 text-white mb-4 shadow-xl">
+              <CheckCircle size={40} />
             </div>
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Check Your Email</h1>
-            <p className="text-slate-600">
-              We've sent a password reset link to<br />
-              <span className="font-medium text-slate-900">{email}</span>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-3">
+              Check Your Email
+            </h1>
+            <p className="text-gray-600 flex flex-col items-center gap-1">
+              <span className="flex items-center gap-2">
+                <Sparkles size={16} className="text-green-600" />
+                We've sent a password reset link to
+              </span>
+              <span className="font-semibold text-gray-900">{email}</span>
             </p>
           </div>
 
           <Card>
-            <div className="text-center space-y-4">
-              <p className="text-sm text-slate-600">
-                Click the link in the email to reset your password. The link will expire in 1 hour.
-              </p>
+            <div className="text-center space-y-5">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <p className="text-sm text-gray-700">
+                  Click the link in the email to reset your password. The link will expire in <span className="font-semibold">1 hour</span>.
+                </p>
+              </div>
               <Link to="/login">
                 <Button variant="outline">
                   Back to Sign In
@@ -75,20 +88,34 @@ const ForgotPassword = () => {
               </Link>
             </div>
           </Card>
+
+          <p className="text-center text-xs text-gray-500 mt-6">
+            Didn't receive the email? Check your spam folder
+          </p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 relative">
+      <Link 
+        to="/login" 
+        className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors font-medium"
+      >
+        <ArrowLeft size={20} />
+        <span>Back to Login</span>
+      </Link>
+
       <div className="w-full max-w-md animate-slide-up">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white mb-4 shadow-md">
-            <KeyRound size={32} />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-cyan-500 text-white mb-6 shadow-lg">
+            <KeyRound size={36} />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Forgot Password?</h1>
-          <p className="text-slate-600">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            Forgot Password?
+          </h1>
+          <p className="text-gray-600">
             No worries, we'll send you reset instructions
           </p>
         </div>
@@ -99,7 +126,7 @@ const ForgotPassword = () => {
               label="Email Address"
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder="you@example.com"
               icon={Mail}
               value={email}
               onChange={handleChange}
@@ -108,19 +135,21 @@ const ForgotPassword = () => {
             />
 
             <Button type="submit" loading={loading}>
-              Send Reset Link
+              {loading ? 'Sending...' : 'Send Reset Link'}
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <Link to="/login" className="text-sm text-gray-600 hover:text-gray-900 flex items-center justify-center gap-1">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
+          <div className="mt-6 pt-6 border-t border-gray-200 text-center">
+            <Link to="/login" className="text-sm text-gray-600 hover:text-gray-900 flex items-center justify-center gap-2 font-medium hover:underline">
+              <ArrowLeft size={16} />
               Back to Sign In
             </Link>
           </div>
         </Card>
+
+        <p className="text-center text-xs text-gray-500 mt-6">
+          Remember your password? <Link to="/login" className="text-blue-600 hover:underline">Sign in</Link>
+        </p>
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 
 // Pages
+import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import VerifyOTP from './pages/VerifyOTP'
@@ -41,6 +42,7 @@ function App() {
         
         <div className="min-h-screen gradient-bg">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verify-otp" element={<VerifyOTP />} />
@@ -56,8 +58,7 @@ function App() {
               } 
             />
             
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -36,4 +36,10 @@ export const authService = {
     const response = await api.post(`/auth/reset-password/${token}`, { password })
     return response.data
   },
+
+  // Resend OTP
+  resendOTP: async (userId) => {
+    const response = await api.post('/auth/resend-otp', { userId })
+    return response.data
+  },
 }

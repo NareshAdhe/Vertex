@@ -20,9 +20,15 @@ export const register = async (req, res) => {
         .json({ success: false, message: "User already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = Math.floor(
+    let verificationToken = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
+
+    if (process.env.NODE_ENV === "development") {
+      verificationToken = "123456";
+      console.log("Development OTP:", verificationToken);
+    }
+
     const hashedVerificationToken = await bcrypt.hash(verificationToken, 10);
 
     const newUser = new User({
@@ -79,6 +85,12 @@ export const login = async (req, res) => {
     let verificationToken = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
+
+    if (process.env.NODE_ENV === "development") {
+      verificationToken = "123456";
+      console.log("Development OTP:", verificationToken);
+    }
+
     const hashedVerificationToken = await bcrypt.hash(verificationToken, 10);
     user.verificationToken = hashedVerificationToken;
     user.verificationTokenExpiresAt = Date.now() + 10 * 60 * 1000;
@@ -202,5 +214,38 @@ export const resetPassword = async (req, res) => {
     res.json({ success: true, message: "Password reset successfully" });
   } catch (error) {
     res.json({ success: false, message: error.message });
+  }
+};
+
+export const resendOtp = async (req, res) => {
+  const userId = req.userId;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ success: false, message: "User not found" });
+    }
+
+    let verificationToken = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+
+    if (process.env.NODE_ENV === "development") {
+      verificationToken = "123456";
+      console.log("Development OTP:", verificationToken);
+    }
+
+    const hashedVerificationToken = await bcrypt.hash(verificationToken, 10);
+    user.verificationToken = hashedVerificationToken;
+    user.verificationTokenExpiresAt = Date.now() + 10 * 60 * 1000;
+    await user.save();
+
+    await sendOtpEmail(user.email, verificationToken, "Your Verification Code");
+
+    return res.status(200).json({
+      success: true,
+      message: "OTP resent successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
 };

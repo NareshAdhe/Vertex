@@ -6,6 +6,7 @@ import {
   verifyOtp,
   forgotPassword,
   resetPassword,
+  resendOtp,
 } from "../controllers/auth.js";
 import { verifySessionToken } from "../middlewares/verifyToken.js";
 
@@ -18,6 +19,8 @@ router.post("/register", register);
 router.post("/logout", logout);
 
 router.post("/verify", verifySessionToken, verifyOtp);
+
+router.post("/resend-otp", verifySessionToken, resendOtp);
 
 router.post("/forgot-password", forgotPassword);
 

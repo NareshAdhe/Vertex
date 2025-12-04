@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, User, BookOpen, Calendar, Clock } from 'lucide-react'
+import { Mail, Lock, User, BookOpen, Calendar, Clock, ArrowLeft, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
@@ -68,23 +68,36 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 relative">
+      {/* Back to Home Link */}
+      <Link 
+        to="/" 
+        className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors font-medium"
+      >
+        <ArrowLeft size={20} />
+        <span>Back to Home</span>
+      </Link>
+
       <div className="w-full max-w-md animate-slide-up">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-4 shadow-md">
-            <Logo size={40} />
-          </div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Vertex</h1>
-          <p className="text-slate-600">Create your account</p>
+          <Link to="/" className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 shadow-lg hover:shadow-xl transition-shadow">
+            <Logo size={40} className="text-white" />
+          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Join Vertex
+          </h1>
+          <p className="text-gray-600">
+            Start your journey to academic excellence
+          </p>
         </div>
 
         <Card>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <Input
               label="Full Name"
               type="text"
               name="name"
-              placeholder="Enter your full name"
+              placeholder="John Doe"
               icon={User}
               value={formData.name}
               onChange={handleChange}
@@ -95,7 +108,7 @@ const Register = () => {
               label="Email Address"
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder="you@example.com"
               icon={Mail}
               value={formData.email}
               onChange={handleChange}
@@ -104,18 +117,18 @@ const Register = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Branch</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Branch</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <BookOpen size={20} />
                   </div>
                   <select
                     name="branch"
                     value={formData.branch}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+                    className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all bg-white font-medium appearance-none cursor-pointer"
                   >
-                    <option value="">Select Branch</option>
+                    <option value="">Select</option>
                     <option value="CSE">CSE</option>
                     <option value="IT">IT</option>
                     <option value="ECE">ECE</option>
@@ -124,57 +137,55 @@ const Register = () => {
                     <option value="CE">CE</option>
                   </select>
                 </div>
-                {errors.branch && <p className="text-red-500 text-xs mt-1">{errors.branch}</p>}
+                {errors.branch && <p className="text-red-600 text-sm mt-2 font-medium">{errors.branch}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Year</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <Calendar size={20} />
                   </div>
                   <select
                     name="year"
                     value={formData.year}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+                    className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all bg-white font-medium appearance-none cursor-pointer"
                   >
-                    <option value="">Select Year</option>
+                    <option value="">Select</option>
                     <option value="1">1st Year</option>
                     <option value="2">2nd Year</option>
                     <option value="3">3rd Year</option>
                     <option value="4">4th Year</option>
                   </select>
                 </div>
-                {errors.year && <p className="text-red-500 text-xs mt-1">{errors.year}</p>}
+                {errors.year && <p className="text-red-600 text-sm mt-2 font-medium">{errors.year}</p>}
               </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Semester</label>
+              </div>            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Semester</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                   <Clock size={20} />
                 </div>
                 <select
                   name="semester"
                   value={formData.semester}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+                  className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all bg-white font-medium appearance-none cursor-pointer"
                 >
                   <option value="">Select Semester</option>
                   <option value="1">Semester 1</option>
                   <option value="2">Semester 2</option>
                 </select>
               </div>
-              {errors.semester && <p className="text-red-500 text-xs mt-1">{errors.semester}</p>}
+              {errors.semester && <p className="text-red-600 text-sm mt-2 font-medium">{errors.semester}</p>}
             </div>
 
             <Input
               label="Password"
               type="password"
               name="password"
-              placeholder="Create a password"
+              placeholder="••••••••"
               icon={Lock}
               value={formData.password}
               onChange={handleChange}
@@ -185,7 +196,7 @@ const Register = () => {
               label="Confirm Password"
               type="password"
               name="confirmPassword"
-              placeholder="Confirm your password"
+              placeholder="••••••••"
               icon={Lock}
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -193,17 +204,21 @@ const Register = () => {
             />
 
             <Button type="submit" loading={loading}>
-              Create Account
+              {loading ? 'Creating Account...' : 'Create Account'}
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
-              Sign in
+          <div className="mt-6 pt-6 border-t border-gray-200 text-center text-sm">
+            <span className="text-gray-600">Already have an account?</span>{' '}
+            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline">
+              Sign In
             </Link>
           </div>
         </Card>
+
+        <p className="text-center text-xs text-gray-500 mt-6">
+          By creating an account, you agree to our Terms & Privacy Policy
+        </p>
       </div>
     </div>
   )
