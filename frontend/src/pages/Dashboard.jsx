@@ -4,15 +4,13 @@ import {
   LogOut, 
   FileText, 
   PenTool, 
-  Clock, 
-  BarChart2, 
+  Clock,  
   Target, 
   Zap,
   Library,
   TrendingUp,
   Award,
   BookOpen,
-  User,
   Settings,
   Bell,
   Search,
@@ -22,9 +20,8 @@ import {
   Activity
 } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { Button } from '../components/Button'
-import { Card } from '../components/Card'
 import { Logo } from '../components/Logo'
+import Header from '../components/Header'
 import { authService } from '../utils/authService'
 
 const Dashboard = () => {
@@ -50,7 +47,7 @@ const Dashboard = () => {
       gradient: "from-blue-500 to-blue-700",
       bgColor: "bg-blue-50",
       iconColor: "text-blue-600",
-      action: () => toast.success("Opening PYQ Library...")
+      action: () => navigate("/pyq")
     },
     {
       title: "Important Questions",
@@ -59,7 +56,7 @@ const Dashboard = () => {
       gradient: "from-red-500 to-pink-600",
       bgColor: "bg-red-50",
       iconColor: "text-red-600",
-      action: () => toast.success("Loading Question Bank...")
+      action: () => navigate("/important")
     },
     {
       title: "Smart Notes",
@@ -109,62 +106,12 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Modern Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo & Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md">
-                <Logo size={24} className="text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">
-                  Vertex
-                </h1>
-                <p className="text-xs text-gray-500">Dashboard</p>
-              </div>
-            </div>
-
-            {/* Search Bar */}
-            <div className="hidden md:flex items-center flex-1 max-w-xl mx-8">
-              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                <input
-                  type="text"
-                  placeholder="Search questions, notes, topics..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                />
-              </div>
-            </div>
-
-            {/* Right Section */}
-            <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors relative">
-                <Bell size={20} className="text-gray-600" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-              <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
-                <Settings size={20} className="text-gray-600" />
-              </button>
-              <div className="hidden md:flex items-center gap-3 pl-3 border-l border-gray-200">
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
-                  <p className="text-xs text-gray-500">{user?.branch} • Year {user?.year}</p>
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-cyan-500 flex items-center justify-center text-white font-semibold shadow-md">
-                  {user?.name?.charAt(0)}
-                </div>
-              </div>
-              <button 
-                onClick={handleLogout}
-                className="p-2 hover:bg-red-50 rounded-xl transition-colors text-red-600"
-              >
-                <LogOut size={20} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header 
+        user={user} 
+        subtitle="Dashboard" 
+        searchPlaceholder="Search questions, notes, topics..."
+        onLogout={handleLogout}
+      />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Banner */}

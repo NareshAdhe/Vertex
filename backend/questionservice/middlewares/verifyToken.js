@@ -10,7 +10,7 @@ export const verifyToken = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(authToken, process.env.JWT_SECRET);
-    req.user = decoded; // Contains userId, branch, year, semester
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

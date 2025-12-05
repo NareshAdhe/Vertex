@@ -42,4 +42,22 @@ export const authService = {
     const response = await api.post('/auth/resend-otp', { userId })
     return response.data
   },
-}
+
+    // Admin: Get all users
+  getAllUsers: async () => {
+    const response = await api.get('/auth/admin/users');
+    return response.data;
+  },
+
+  // Admin: Update user role
+  updateUserRole: async (userId, role) => {
+    const response = await api.put(`/auth/admin/users/${userId}/role`, { role });
+    return response.data;
+  },
+
+  // Admin: Delete user
+  deleteUser: async (userId) => {
+    const response = await api.delete(`/auth/admin/users/${userId}`);
+    return response.data;
+  },
+};

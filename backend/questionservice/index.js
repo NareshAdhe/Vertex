@@ -2,7 +2,9 @@ import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import connectDB from "./utils/db";
+import connectDB from "./utils/db.js";
+
+import questionRouter from "./routes/question.js";
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -12,6 +14,8 @@ app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/", questionRouter);
 
 app.get("/",(req,res) => {
     res.send("Welcome to questionservice!");

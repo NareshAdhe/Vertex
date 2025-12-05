@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
+import AuthenticatedLayout from './components/AuthenticatedLayout'
+import AdminRoute from './components/AdminRoute'
 
 // Pages
 import Home from './pages/Home'
@@ -10,7 +12,10 @@ import VerifyOTP from './pages/VerifyOTP'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
-import ProtectedRoute from './components/ProtectedRoute'
+import PYQLibrary from './pages/PYQLibrary'
+import ImportantQuestions from './pages/ImportantQuestions'
+import QuestionDetail from './pages/QuestionDetail'
+import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
   return (
@@ -49,14 +54,19 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
+            {/* Authenticated Routes */}
+            <Route element={<AuthenticatedLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/pyq" element={<PYQLibrary />} />
+              <Route path="/pyq/:id" element={<QuestionDetail />} />
+              <Route path="/important" element={<ImportantQuestions />} />
+              <Route path="/important/:id" element={<QuestionDetail />} />
+              
+              {/* Admin Routes */}
+              <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminDashboard />} />
+              </Route>
+            </Route>
             
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

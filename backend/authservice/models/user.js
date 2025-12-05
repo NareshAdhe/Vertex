@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     branch: {
       type: String,
       required: true,
-      enum: ["CSE", "IT", "ECE", "EE", "ME", "CE"], // Add your college branches
+      enum: ["CSE", "IT", "ECE", "EE", "ME", "CE"],
     },
     year: {
       type: Number,
@@ -31,6 +31,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       min: 1,
       max: 2,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
     lastLogin: {
       type: Date,

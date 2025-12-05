@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 import { createProxyMiddleware } from "http-proxy-middleware";
 
 const app = express();
@@ -14,7 +13,7 @@ app.use(cors({
   credentials: true 
 }));
 
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ status: "API Gateway is running" });
 });
 
@@ -28,11 +27,11 @@ app.use("/api/auth", createProxyMiddleware({
 }));
 
 // Route to Question Service
-app.use("/api/question", createProxyMiddleware({
+app.use("/api/questions", createProxyMiddleware({
   target: process.env.QUESTION_SERVICE_URL,
   changeOrigin: true,
   pathRewrite: {
-    "^/api/question": ""
+    "^/api/questions": ""
   }
 }));
 

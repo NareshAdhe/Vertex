@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./utils/db.js";
 import authRouter from "./routes/auth.js";
+import adminRouter from "./routes/admin.js";
 import transporter from "./utils/transporter.js";
 
 const app = express();
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", authRouter);
+app.use("/admin", adminRouter);
 
 // 404 handler
 app.use((req, res) => {
